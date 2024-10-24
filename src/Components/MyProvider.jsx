@@ -7,6 +7,7 @@ export default function MyProvider({children}) {
 
 const [products, setProducts] = useState([]);
 const [selectedProducts, setSelectedProducts] = useState([]);
+const [price , setPrice] = useState(0);
 
 const handleSelectedProduct = (product)=>{
     const check = selectedProducts.find((item)=>{
@@ -22,9 +23,14 @@ const handleSelectedProduct = (product)=>{
         const newSelectedProducts = selectedProducts.filter((item)=>{
             return item.id !== product.id
             })
-            setSelectedProducts(newSelectedProducts)
+            setPrice((previousPrice) => 
+                parseFloat((parseFloat(previousPrice) - parseFloat(product.price)))
+            );
+            setSelectedProducts(newSelectedProducts);
+            
 
     }else{
+        setPrice((previousPrice)=> parseFloat(previousPrice) + parseFloat(product.price))
         setSelectedProducts([...selectedProducts, product])
     }
 
@@ -43,7 +49,7 @@ useEffect(()=>{
 
 
   return (
-    <MyContext.Provider value={{products, setProducts, handleSelectedProduct, selectedProducts}}>
+    <MyContext.Provider value={{products, setProducts, handleSelectedProduct, selectedProducts, price}}>
         {children}
     </MyContext.Provider>
   )

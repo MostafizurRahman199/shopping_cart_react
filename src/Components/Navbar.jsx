@@ -1,6 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import MyContext from '../utils/MyContext'
+import PersonIcon from '@mui/icons-material/Person';
 
 export default function Navbar() {
+
+const {selectedProducts, price} = useContext(MyContext)
+
   return (
     <div className="navbar bg-base-100">
     <div className="navbar-start">
@@ -22,29 +27,22 @@ export default function Navbar() {
         <ul
           tabIndex={0}
           className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-          <li><a>Item 1</a></li>
-          <li>
-            <a>Parent</a>
-            <ul className="p-2">
-              <li><a>Submenu 1</a></li>
-              <li><a>Submenu 2</a></li>
-            </ul>
-          </li>
-          <li><a>Item 3</a></li>
+          <li><a>Cart : {selectedProducts.length}</a></li>
+          <li><a>Price : $ {price}</a></li>
         </ul>
       </div>
       <a className="btn btn-ghost text-xl">Shopping Cart</a>
     </div>
-    <div className="navbar-center hidden lg:flex">
-      <ul className="menu menu-horizontal px-1">
-        <li><a>Item 1</a></li>
-        <li><a>Item 2</a></li>
+    <div className="navbar-center hidden lg:flex ">
+      <ul className="menu menu-horizontal px-1 gap-2">
+      <li ><a className='bg-purple-500 hover:bg-purple-600 text-white rounded-lg'>Cart : {selectedProducts.length}</a></li>
+        <li ><a className='bg-purple-500 hover:bg-purple-600 text-white rounded-lg'>Price : $ {price < 0 ? 0 : price.toFixed(3)}</a></li>
         
-        <li><a>Item 3</a></li>
+       
       </ul>
     </div>
     <div className="navbar-end">
-      <a className="btn">Button</a>
+      <a className="btn"><PersonIcon/></a>
     </div>
   </div>
   )
